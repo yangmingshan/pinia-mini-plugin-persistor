@@ -1,0 +1,1 @@
+# pinia-mini-plugin-persistor
