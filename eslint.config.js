@@ -4,9 +4,9 @@ import tseslint from 'typescript-eslint'
 import prettier from 'eslint-config-prettier'
 
 const config = [
+  { ignores: ['dist/', 'coverage/'] },
   {
     files: ['**/*.js', '**/*.ts'],
-    ignores: ['dist/**/*', 'coverage/**/*'],
     linterOptions: { reportUnusedDisableDirectives: true },
     ...eslint.configs.recommended,
   },

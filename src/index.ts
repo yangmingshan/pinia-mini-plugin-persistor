@@ -1,5 +1,16 @@
 import type { Store, StateTree, PiniaPluginContext } from '@vue-mini/pinia'
-import './types'
+
+declare module '@vue-mini/pinia' {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  export interface DefineStoreOptionsBase<S extends StateTree, Store> {
+    persist?: boolean
+  }
+
+  export interface PiniaCustomProperties {
+    $hydrate: () => void
+    $persist: () => void
+  }
+}
 
 function hydrate(store: Store) {
   try {
