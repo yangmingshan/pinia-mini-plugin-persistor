@@ -18,16 +18,6 @@ export interface PersistorOptions {
    * @default $store.id
    */
   key?: string
-
-  /**
-   * Hook called before hydrating store.
-   */
-  beforeHydrate?: (context: PiniaPluginContext) => void
-
-  /**
-   * Hook called after hydrating store.
-   */
-  afterHydrate?: (context: PiniaPluginContext) => void
 }
 
 declare module '@vue-mini/pinia' {
@@ -37,29 +27,16 @@ declare module '@vue-mini/pinia' {
   }
 
   export interface PiniaCustomProperties {
-    $hydrate: (options?: { runHooks?: boolean }) => void
+    $hydrate: () => void
     $persist: () => void
   }
 }
 
-function hydrate(
-  store: Store,
-  options: PersistorOptions,
-  context: PiniaPluginContext,
-  runHooks: boolean,
-) {
+function hydrate(key: string, store: Store) {
   try {
-    if (runHooks && options.beforeHydrate) {
-      options.beforeHydrate(context)
-    }
-
-    const state: string = wx.getStorageSync(options.key!)
+    const state: string = wx.getStorageSync(key)
     if (state) {
       store.$patch(JSON.parse(state))
-    }
-
-    if (runHooks && options.afterHydrate) {
-      options.afterHydrate(context)
     }
   } catch (error) {
     if (__DEV__) {
@@ -68,9 +45,9 @@ function hydrate(
   }
 }
 
-function persist(id: string, state: StateTree) {
+function persist(key: string, state: StateTree) {
   try {
-    wx.setStorageSync(id, JSON.stringify(state))
+    wx.setStorageSync(key, JSON.stringify(state))
   } catch (error) {
     if (__DEV__) {
       console.error('[pinia-mini-plugin-persistor]', error)
@@ -97,15 +74,15 @@ export function createPersistor(pluginOptions: PluginOptions = {}) {
     const persistorOptions = options.persist === true ? {} : options.persist
     persistorOptions.key = pluginOptions.key!(persistorOptions.key || store.$id)
 
-    store.$hydrate = ({ runHooks = true } = {}) => {
-      hydrate(store, persistorOptions, context, runHooks)
+    store.$hydrate = () => {
+      hydrate(persistorOptions.key!, store)
     }
 
     store.$persist = () => {
       persist(persistorOptions.key!, store.$state)
     }
 
-    hydrate(store, persistorOptions, context, true)
+    hydrate(persistorOptions.key, store)
 
     store.$subscribe(
       (_, state) => {
