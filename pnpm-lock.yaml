@@ -15,6 +15,9 @@ importers:
       '@eslint/js':
         specifier: ^9.21.0
         version: 9.21.0
+      '@rollup/plugin-replace':
+        specifier: ^6.0.2
+        version: 6.0.2(rollup@4.35.0)
       '@rollup/plugin-terser':
         specifier: ^0.4.4
         version: 0.4.4(rollup@4.35.0)
@@ -143,6 +146,15 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@rollup/plugin-replace@6.0.2':
+    resolution: {integrity: sha512-7QaYCf8bqF04dOy7w/eHmJeNExxTYwvKAmlSAH/EaWWUzbT0h5sbF6bktFoX/0F/0qwng5/dWFMyf3gzaM8DsQ==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
 
   '@rollup/plugin-terser@0.4.4':
     resolution: {integrity: sha512-XHeJC5Bgvs8LfukDwWZp7yeqin6ns8RTl2B9avbejt6tZqsqvVoWI7ZTQrcNsfKEDWBTnTxM8nMDkO2IFFbd0A==}
@@ -687,6 +699,9 @@ packages:
     resolution: {integrity: sha512-9ie8ItPR6tjY5uYJh8K/Zrv/RMZ5VOlOWvtZdEHYSTFKZfIBPQa9tOAEeAWhd+AnIneLJ22w5fjOYtoutpWq5w==}
     engines: {node: '>=18'}
 
+  magic-string@0.30.17:
+    resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
+
   merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
 
@@ -1046,6 +1061,13 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
+
+  '@rollup/plugin-replace@6.0.2(rollup@4.35.0)':
+    dependencies:
+      '@rollup/pluginutils': 5.1.4(rollup@4.35.0)
+      magic-string: 0.30.17
+    optionalDependencies:
+      rollup: 4.35.0
 
   '@rollup/plugin-terser@0.4.4(rollup@4.35.0)':
     dependencies:
@@ -1569,6 +1591,10 @@ snapshots:
       slice-ansi: 7.1.0
       strip-ansi: 7.1.0
       wrap-ansi: 9.0.0
+
+  magic-string@0.30.17:
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.0
 
   merge-stream@2.0.0: {}
 

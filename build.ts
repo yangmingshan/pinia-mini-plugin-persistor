@@ -2,6 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { rollup } from 'rollup'
 import terser from '@rollup/plugin-terser'
+import replace from '@rollup/plugin-replace'
 import typescript from '@rollup/plugin-typescript'
 
 async function generateDeclaration() {
@@ -21,10 +22,12 @@ async function generateDeclaration() {
 
 async function generateCode({
   minify,
+  replaces,
   fileName,
   format,
 }: {
   minify: boolean
+  replaces: Record<string, string>
   fileName: string
   format: 'es' | 'cjs'
 }) {
@@ -34,9 +37,14 @@ async function generateCode({
     plugins: [
       minify && terser({ compress: { ecma: 2016, pure_getters: true } }),
       typescript({ tsconfig: 'tsconfig.build.json' }),
+      replace({ values: replaces, preventAssignment: true }),
     ].filter(Boolean),
   })
-  await bundle.write({ file: path.join('dist', fileName), format })
+  await bundle.write({
+    file: path.join('dist', fileName),
+    exports: 'named',
+    format,
+  })
 }
 
 async function build() {
@@ -44,16 +52,23 @@ async function build() {
 
   await generateDeclaration()
 
-  await generateCode({ minify: false, fileName: 'index.cjs.js', format: 'cjs' })
+  await generateCode({
+    minify: false,
+    replaces: { __DEV__: 'true' },
+    fileName: 'index.cjs.js',
+    format: 'cjs',
+  })
 
   await generateCode({
     minify: true,
+    replaces: { __DEV__: 'false' },
     fileName: 'index.cjs.prod.js',
     format: 'cjs',
   })
 
   await generateCode({
     minify: false,
+    replaces: { __DEV__: `(process.env.NODE_ENV !== 'production')` },
     fileName: 'index.esm-bundler.js',
     format: 'es',
   })
