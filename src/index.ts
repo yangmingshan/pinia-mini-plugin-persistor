@@ -1,3 +1,5 @@
+import type { UnwrapRef } from '@vue-mini/core'
+import { readonly } from '@vue-mini/core'
 import type { Store, StateTree, PiniaPluginContext } from '@vue-mini/pinia'
 
 export interface PluginOptions {
@@ -12,18 +14,20 @@ export interface PluginOptions {
   auto?: boolean
 }
 
-export interface PersistorOptions {
+export interface PersistorOptions<S> {
   /**
    * Storage key to use.
    * @default $store.id
    */
   key?: string
+
+  state?: (storeState: Readonly<S>) => Partial<S>
 }
 
 declare module '@vue-mini/pinia' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  export interface DefineStoreOptionsBase<S extends StateTree, Store> {
-    persist?: boolean | PersistorOptions
+  export interface DefineStoreOptionsBase<S, Store> {
+    persist?: boolean | PersistorOptions<UnwrapRef<S>>
   }
 
   export interface PiniaCustomProperties {
@@ -45,9 +49,12 @@ function hydrate(key: string, store: Store) {
   }
 }
 
-function persist(key: string, state: StateTree) {
+function persist(options: PersistorOptions<StateTree>, state: StateTree) {
   try {
-    wx.setStorageSync(key, JSON.stringify(state))
+    wx.setStorageSync(
+      options.key!,
+      JSON.stringify(options.state!(readonly(state))),
+    )
   } catch (error) {
     if (__DEV__) {
       console.error('[pinia-mini-plugin-persistor]', error)
@@ -57,7 +64,7 @@ function persist(key: string, state: StateTree) {
 
 export function createPersistor(pluginOptions: PluginOptions = {}) {
   if (pluginOptions.key === undefined) {
-    pluginOptions.key = (x: string) => x
+    pluginOptions.key = (k) => k
   }
   if (pluginOptions.auto === undefined) {
     pluginOptions.auto = false
@@ -73,20 +80,23 @@ export function createPersistor(pluginOptions: PluginOptions = {}) {
 
     const persistorOptions = options.persist === true ? {} : options.persist
     persistorOptions.key = pluginOptions.key!(persistorOptions.key || store.$id)
+    if (persistorOptions.state === undefined) {
+      persistorOptions.state = (s) => s
+    }
 
     store.$hydrate = () => {
       hydrate(persistorOptions.key!, store)
     }
 
     store.$persist = () => {
-      persist(persistorOptions.key!, store.$state)
+      persist(persistorOptions, store.$state)
     }
 
     hydrate(persistorOptions.key, store)
 
     store.$subscribe(
       (_, state) => {
-        persist(persistorOptions.key!, state)
+        persist(persistorOptions, state)
       },
       { detached: true },
     )

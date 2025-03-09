@@ -8,7 +8,7 @@ import typescript from '@rollup/plugin-typescript'
 async function generateDeclaration() {
   const bundle = await rollup({
     input: path.join('src', 'index.ts'),
-    external: ['@vue-mini/pinia'],
+    external: ['@vue-mini/core', '@vue-mini/pinia'],
     plugins: [
       typescript({
         tsconfig: 'tsconfig.build.json',
@@ -33,7 +33,7 @@ async function generateCode({
 }) {
   const bundle = await rollup({
     input: path.join('src', 'index.ts'),
-    external: ['@vue-mini/pinia'],
+    external: ['@vue-mini/core', '@vue-mini/pinia'],
     plugins: [
       minify && terser({ compress: { ecma: 2016, pure_getters: true } }),
       typescript({ tsconfig: 'tsconfig.build.json' }),
