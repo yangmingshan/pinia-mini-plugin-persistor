@@ -37,7 +37,7 @@ declare module '@vue-mini/pinia' {
   }
 
   export interface PiniaCustomProperties {
-    $hydrate: () => void
+    $hydrate: (options?: { runHooks?: boolean }) => void
     $persist: () => void
   }
 }
