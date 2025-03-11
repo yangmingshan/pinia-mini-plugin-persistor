@@ -129,6 +129,10 @@ const store = useStore()
 store.$persist()
 ```
 
+## 限制
+
+请确保被持久化的状态可以被序列化，不包含 `Date` 等无法序列化的值。
+
 ## 许可证
 
 [MIT](https://opensource.org/licenses/MIT)
