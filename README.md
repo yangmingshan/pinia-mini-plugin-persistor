@@ -77,13 +77,13 @@ const useStore = defineStore(
   () => {
     const count = ref(0)
     const greeting = ref('Hello World')
-    return { count， greeting }
+    return { count, greeting }
   },
   {
     persist: {
       // 仅持久化 count
-      state: (storeState) => ({count: storeState.count}),
-    }
+      state: (storeState) => ({ count: storeState.count }),
+    },
   },
 )
 ```
