@@ -1,4 +1,4 @@
-# pinia-mini-plugin-persistor
+# pinia-mini-plugin-persistor [![Coverage Status](https://img.shields.io/codecov/c/github/yangmingshan/pinia-mini-plugin-persistor.svg)](https://codecov.io/gh/yangmingshan/pinia-mini-plugin-persistor)
 
 这是一个 `@vue-mini/pinia` 的持久化插件，可以自动的存储并恢复仓库状态。Fork 至 [pinia-plugin-persistedstate](https://github.com/prazdevs/pinia-plugin-persistedstate)
 
