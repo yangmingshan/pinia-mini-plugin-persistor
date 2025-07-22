@@ -1,20 +1,20 @@
 import globals from 'globals'
 import eslint from '@eslint/js'
 import tseslint from 'typescript-eslint'
-import prettier from 'eslint-config-prettier'
 
 const config = [
   { ignores: ['dist/', 'coverage/'] },
   {
     files: ['**/*.js', '**/*.ts'],
     linterOptions: { reportUnusedDisableDirectives: true },
-    ...eslint.configs.recommended,
+    rules: {
+      ...eslint.configs.recommended.rules,
+      // Avoid conflicts with Prettier
+      // https://github.com/prettier/eslint-config-prettier#no-unexpected-multiline
+      'no-unexpected-multiline': 'off',
+    },
   },
-  {
-    files: ['**/*.js'],
-    languageOptions: { globals: globals.node },
-    ...prettier,
-  },
+  { files: ['**/*.js'], languageOptions: { globals: globals.node } },
   ...tseslint.configs.recommendedTypeChecked.map((c) => ({
     ...c,
     files: ['**/*.ts'],
@@ -27,7 +27,6 @@ const config = [
         tsconfigRootDir: import.meta.dirname,
       },
     },
-    ...prettier,
   },
 ]
 
