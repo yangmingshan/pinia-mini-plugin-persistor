@@ -62,7 +62,9 @@ function persist(options: PersistorOptions<StateTree>, state: StateTree) {
   }
 }
 
-export function createPersistor(pluginOptions: PluginOptions = {}) {
+export function createPersistor(
+  pluginOptions: PluginOptions = {},
+): (context: PiniaPluginContext) => void {
   if (pluginOptions.key === undefined) {
     pluginOptions.key = (k) => k
   }
@@ -105,4 +107,6 @@ export function createPersistor(pluginOptions: PluginOptions = {}) {
   return persistor
 }
 
-export default createPersistor()
+const persistor: (context: PiniaPluginContext) => void = createPersistor()
+
+export default persistor

@@ -12,7 +12,7 @@ async function generateDeclaration() {
     plugins: [
       typescript({
         tsconfig: 'tsconfig.build.json',
-        compilerOptions: { declaration: true, declarationDir: 'dist' },
+        compilerOptions: { noCheck: true, declarationDir: 'dist' },
       }),
     ],
   })
@@ -36,7 +36,14 @@ async function generateCode({
     external: ['@vue-mini/core', '@vue-mini/pinia'],
     plugins: [
       minify && terser({ compress: { ecma: 2016, pure_getters: true } }),
-      typescript({ tsconfig: 'tsconfig.build.json' }),
+      typescript({
+        tsconfig: 'tsconfig.build.json',
+        compilerOptions: {
+          noCheck: true,
+          declaration: false,
+          isolatedDeclarations: false,
+        },
+      }),
       replace({ values: replaces, preventAssignment: true }),
     ].filter(Boolean),
   })

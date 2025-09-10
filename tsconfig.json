@@ -12,7 +12,9 @@
     "resolveJsonModule": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "declaration": true,
+    "isolatedDeclarations": true
   },
   "include": ["src", "__tests__", "build.ts", "global.d.ts", "vitest.config.ts"]
 }

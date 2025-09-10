@@ -1,6 +1,7 @@
+import type { ViteUserConfig } from 'vitest/config'
 import { defineConfig } from 'vitest/config'
 
-export default defineConfig({
+const config: ViteUserConfig = defineConfig({
   define: { __DEV__: true },
   test: {
     watch: false,
@@ -12,3 +13,5 @@ export default defineConfig({
     },
   },
 })
+
+export default config
