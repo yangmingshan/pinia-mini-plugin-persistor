@@ -1,6 +1,6 @@
 {
   "name": "pinia-mini-plugin-persistor",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "type": "module",
   "packageManager": "pnpm@10.15.1",
   "description": "Persistence plugin for @vue-mini/pinia",
