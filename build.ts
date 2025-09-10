@@ -12,7 +12,7 @@ async function generateDeclaration() {
     plugins: [
       typescript({
         tsconfig: 'tsconfig.build.json',
-        compilerOptions: { noCheck: true, declarationDir: 'dist' },
+        compilerOptions: { declarationDir: 'dist' },
       }),
     ],
   })
@@ -38,11 +38,7 @@ async function generateCode({
       minify && terser({ compress: { ecma: 2016, pure_getters: true } }),
       typescript({
         tsconfig: 'tsconfig.build.json',
-        compilerOptions: {
-          noCheck: true,
-          declaration: false,
-          isolatedDeclarations: false,
-        },
+        compilerOptions: { declaration: false, isolatedDeclarations: false },
       }),
       replace({ values: replaces, preventAssignment: true }),
     ].filter(Boolean),

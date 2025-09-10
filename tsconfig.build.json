@@ -1,4 +1,5 @@
 {
   "extends": "./tsconfig.json",
+  "compilerOptions": { "noCheck": true },
   "exclude": ["__tests__", "build.ts", "vitest.config.ts"]
 }
