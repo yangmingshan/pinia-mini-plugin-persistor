@@ -1,4 +1,3 @@
-import globals from 'globals'
 import eslint from '@eslint/js'
 import tseslint from 'typescript-eslint'
 
@@ -14,7 +13,6 @@ const config = [
       'no-unexpected-multiline': 'off',
     },
   },
-  { files: ['**/*.js'], languageOptions: { globals: globals.node } },
   ...tseslint.configs.recommendedTypeChecked.map((c) => ({
     ...c,
     files: ['**/*.ts'],
