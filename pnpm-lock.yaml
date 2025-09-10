@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@vue-mini/core':
-        specifier: ^1.2.2
+        specifier: ^1.2.5
         version: 1.2.5
       '@vue-mini/pinia':
-        specifier: ^0.1.1
-        version: 0.1.2(@vue-mini/core@1.2.5)
+        specifier: ^1.0.0
+        version: 1.0.0(@vue-mini/core@1.2.5)
     devDependencies:
       '@eslint/js':
         specifier: ^9.35.0
@@ -598,8 +598,8 @@ packages:
   '@vue-mini/core@1.2.5':
     resolution: {integrity: sha512-raZLtlK+qPJrPQOuieXQUuj6WpzSWq7AjiGFd2y1PbzyqWMbUgnylzT+IMvdgBk7T+g8qN8sV3wN+bgFk3rgaQ==}
 
-  '@vue-mini/pinia@0.1.2':
-    resolution: {integrity: sha512-sIYKWpP1Gd+Pa40FHfJYFIk1iN7Mf5DKdwpYFH17X4tKjRDPU0i1EJLU0WsqmkmLUJp8J+Wpa1gTHe3IjeRu2A==}
+  '@vue-mini/pinia@1.0.0':
+    resolution: {integrity: sha512-8ILa6vXCgjn9Ud1WHttJiawcuQ5al3Y/zupbNKJjNySAjDeLeBEJ9EGo955IphcKCgTnhlGYu4N9jFMLmt5LIw==}
     peerDependencies:
       '@vue-mini/core': ^1.2.1
 
@@ -1935,7 +1935,7 @@ snapshots:
       '@vue/reactivity': 3.5.21
       miniprogram-api-typings: 4.0.8
 
-  '@vue-mini/pinia@0.1.2(@vue-mini/core@1.2.5)':
+  '@vue-mini/pinia@1.0.0(@vue-mini/core@1.2.5)':
     dependencies:
       '@vue-mini/core': 1.2.5
 
