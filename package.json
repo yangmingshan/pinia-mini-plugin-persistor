@@ -2,7 +2,7 @@
   "name": "pinia-mini-plugin-persistor",
   "version": "1.0.0",
   "type": "module",
-  "packageManager": "pnpm@10.15.1",
+  "packageManager": "pnpm@10.17.1",
   "description": "Persistence plugin for @vue-mini/pinia",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm-bundler.js",
