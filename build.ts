@@ -12,7 +12,7 @@ async function generateDeclaration() {
     plugins: [
       typescript({
         tsconfig: 'tsconfig.build.json',
-        compilerOptions: { declarationDir: 'dist' },
+        compilerOptions: { rootDir: 'src', declarationDir: 'dist' },
       }),
     ],
   })
